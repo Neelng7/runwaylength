@@ -1,0 +1,94 @@
+body {
+    background-color: var(--background-white);
+    font-family: 'EB Garamond', Garamond;
+    font-weight: 500;
+    padding: 0;
+    margin: 20px;
+    text-align: center;
+    color: var(--text-color);
+    user-select: none;
+    overflow-x: hidden;
+}
+:root{
+    --background-white: rgb(250,249,248);
+    --text-color: rgb(55, 55, 55);
+    --border-black: rgba(55, 55, 55, 0.5);
+    --white-hover: rgb(238, 238, 238);
+    --btn-hover: rgba(55, 55, 55, 2.5%);
+    --btn-color: rgb(0, 47, 77);
+}
+pre{
+    font-family: 'EB Garamond', Garamond;
+    white-space: pre;
+}
+input{
+    color: rgb(80, 80, 80);
+}
+button{
+    color: var(--text-color);
+}
+.btn{
+    border-radius: 25px;
+    border: none;
+    font-size: 85%;
+    background: var(--btn-color);
+    padding-inline: 0;
+    padding-block: 4px;
+    min-width: 8em;
+    width: calc(5% + 4em);
+    color: var(--background-white);
+    margin-inline: 0;
+    text-align: center;
+    cursor: pointer;
+    left: calc(47.5% - 4em);
+}
+.inp, option{
+    background-color: var(--background-white);
+    border: 1px solid var(--border-black);
+    border-radius: 5px;
+    padding-block: 4px;
+    padding-inline: 10px;
+    margin-bottom: 20px;
+}
+.main-div label{
+    padding-right: calc();
+}
+.main-div{
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.sub-div{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+.sub-div .inp{
+    position: relative;
+    top: 0.75rem;
+}
+#model-L{ padding-right: 16.25rem; }
+#std-length-L{ padding-right: 6.75rem; }
+#country-L{ padding-right: 15rem; }
+#city-L { padding-right: 17.5rem; }
+#avg-L{ padding-right: 1.75rem; }
+#max-L{ padding-right: 1rem; }
+#ART-L { padding-right: 6.9rem; }
+#elevation-L { padding-right: 9.75rem; }
+#eff-grad-L { padding-right: 12.125rem; }
+
+#weather-info-span P{
+    margin: 2px;
+}
+#weather-info-span{
+    margin: 0;
+    padding: 0;
+}
+
+.hide{
+    display: none !important;
+}
+.alert{
+    color: red;
+}

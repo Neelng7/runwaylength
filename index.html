@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+    <link class="link" rel="icon" href="https://prefute.com/images/Logo.png" type="image/icon type">
+    <title>Runway Length</title>
+</head>
+<body>
+    <h1>Airport Runway Length Calculator</h1>
+
+<div class="main-div">
+    <p id="error-mssg" class="alert"></p>
+
+    <div class="sub-div">
+        <label id="model-L" for="model">Aircraft Model:</label>
+        <select name="models" id="aircrafts-dropdown" class="inp">
+            <option value="Select an Aircraft">Select an Aircraft</option>
+        </select><br>
+        <input type="text" id="model-inp" class="inp hide" placeholder="Aircraft Model">
+    </div>
+
+    <div class="sub-div">
+        <label id="std-length-L" for="std-length">Runway Length at Standard Conditions: </label>
+        <input type="number" step="100" class="inp" id="std-length" placeholder="standard length">
+    </div>
+
+    <div class="sub-div">
+        <label id="country-L" for="countries-dropdown">Select the country: </label>
+        <select id="countries-dropdown" name="country" class="inp">
+            <option id="default-country" value="select a country">Select a Country</option>    
+        </select>
+    </div>
+
+    <div class="sub-div">
+        <label id="city-L" for="cities-dropdown">Select a city: </label>
+        <select name="city" id="cities-dropdown" class="inp" disabled>
+            <option id="default-city" value="Select a City">Select a City</option>
+        </select>
+    </div>
+
+    <div class="sub-div">
+        <label id="avg-L" for="temp_avg_mean">Monthly mean of average daily temperatures (in °C): </label>
+        <input type="number" class="inp" id="temp_avg_mean" placeholder="Avg Temperatures Mean">
+    </div>
+
+    <div class="sub-div">
+        <label id="max-L" for="temp_max_mean">Monthly mean of maximun daily temperatures (in °C): </label>
+        <input type="number" class="inp" id="temp_max_mean" placeholder="Max Temperatures Mean">
+    </div>
+
+    <div class="sub-div">
+        <label id="ART-L" for="ART">Airport Reference Temperature (in ºC): </label>
+        <input type="number" class="inp" id="ART" placeholder="ART"><br>
+    </div>
+
+    <div class="sub-div">
+        <label id="elevation-L" for="elevation">Elevation above sea level (in m):</label>
+        <input type="number" step="100" class="inp" id="elevation" placeholder="Elevation">
+    </div>
+
+    <div class="sub-div">
+        <label id="eff-grad-L" for="effective_gradient">Effective Gradient (in %): </label>
+        <input type="number" step="0.5" class="inp" id="effective_gradient" placeholder="effective gradient">
+    </div>
+
+</div>
+
+    <button class="btn" id="submit">Calculate</button>
+    <button class="btn" id="reset">Reset</button>
+    <br><br>
+
+    <p id="correctedLength"></p><br>
+    
+    <button id="more-info" class="btn hide">View more info</button><br>
+    <span id="weather-info-span" class="hide"></span>
+
+</body>
+</html>
