@@ -50,6 +50,9 @@ button{
     padding-inline: 10px;
     margin-bottom: 20px;
 }
+select{
+    width: 11.4rem;
+}
 .main-div label{
     padding-right: calc();
 }
@@ -68,16 +71,42 @@ button{
     position: relative;
     top: 0.75rem;
 }
-#model-L{ padding-right: 16.25rem; }
+/* #model-inp{
+    width: 14rem;
+} */
+.sqaure-btn{
+    background: none;
+    border: 1.5px solid #949494;
+    color: var(--text-color);
+    border-radius: 4px;
+    cursor: pointer;
+    padding-inline: 0.5rem;
+    padding-top: 0.30rem;
+    padding-bottom: 0.20rem;
+    position: relative;
+    top: 2px;
+    margin-left: 0.75rem;
+}
+.sqaure-btn:hover{
+    background-color: rgba(34, 34, 34, 0.05);
+}
+#model-L.other{ padding-right: 3.75rem; }
+#model-L.default{ padding-right: 16.25rem; }
+#aircrafts-dropdown { margin-right: 1rem;}
 #std-length-L{ padding-right: 6.75rem; }
 #country-L{ padding-right: 15rem; }
 #city-L { padding-right: 17.5rem; }
+#lat-L, #lon-L { padding-right: 0.75rem;}
+#lat {margin-right: 1.25rem; }
 #avg-L{ padding-right: 1.75rem; }
 #max-L{ padding-right: 1rem; }
 #ART-L { padding-right: 6.9rem; }
 #elevation-L { padding-right: 9.75rem; }
 #eff-grad-L { padding-right: 12.125rem; }
-
+#map-L{
+    position: relative;
+    top: 1.25rem;
+}
 #weather-info-span P{
     margin: 2px;
 }
@@ -85,7 +114,14 @@ button{
     margin: 0;
     padding: 0;
 }
-
+#map {
+    height: 350px;
+    width: 100%;
+    margin-block: 30px;
+    margin-inline: 0;
+    border: 2px solid var(--text-color);
+    border-radius: 5px;
+}
 .hide{
     display: none !important;
 }

@@ -1,5 +1,6 @@
 const modelInp = document.getElementById("model-inp");
 const aircraftsDropdown = document.getElementById('aircrafts-dropdown');
+const modelLabel = document.getElementById("model-L");
 const stdLength = document.getElementById("std-length");
 const elevation = document.getElementById("elevation");
 const tempAvgMean = document.getElementById("temp_avg_mean");
@@ -11,15 +12,33 @@ const submitBtn = document.getElementById("submit");
 const moreInfoBtn = document.getElementById('more-info')
 const countriesDropdown = document.getElementById("countries-dropdown");
 const citiesDropdown = document.getElementById("cities-dropdown");
+const longitudeInp = document.getElementById("lon");
+const latitudeInp = document.getElementById("lat");
 const weatherInfoSpan = document.getElementById('weather-info-span');
 const defaultCountryOption = document.getElementById("default-country");
 const defaultCityOption = document.getElementById("default-city");
 const errorMssg = document.getElementById("error-mssg");
 
+
+var map = L.map('map').setView([0, 0], 1);
+document.querySelector('.leaflet-control-attribution.leaflet-control').remove();
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
 generateDefaultData();
+
 aircraftsDropdown.addEventListener('change', () => {
-  if(aircraftsDropdown.value == "Other") modelInp.classList.remove('hide');
-  else modelInp.classList.add('hide');
+  if(aircraftsDropdown.value == "Other"){
+    modelInp.classList.remove('hide');
+    modelLabel.classList.toggle('other', true);
+    modelLabel.classList.toggle('default', false);
+  }
+  else{
+    modelInp.classList.add('hide');
+    modelLabel.classList.toggle('other', false);
+    modelLabel.classList.toggle('default', true); 
+  }
 })
 
 countriesDropdown.addEventListener('change', () => {
@@ -57,7 +76,39 @@ citiesDropdown.addEventListener('change', () => {
   defaultCityOption.remove();
   const cityURL = selectedCity.split(" ").join("%20");
 
-  fetch(`https://api.tomorrow.io/v4/weather/history/recent?location=${cityURL}&timesteps=1d&units=metric&apikey=PY0w8ZwjhpgOyvnFd75Y5e8TDj83aJbV`)
+
+  fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${cityURL}`)
+  .then(response => response.json())
+  .then(response => {
+    var latitude = response[0].lat
+    var longitude = response[0].lon
+    map.setView([latitude, longitude], 11);
+
+  }).catch(function(error) {
+    console.error('An error occurred:', error);
+  });
+
+})
+
+var latitude, longitude;
+
+map.on('click', function(e) {
+  latitude = e.latlng.lat;
+  longitude = e.latlng.lng;
+
+  markerIcon = document.querySelector(".leaflet-marker-icon");
+  markerShadow = document.querySelector(".leaflet-marker-shadow")
+  if(markerShadow) markerShadow.remove();
+  if(markerIcon) markerIcon.remove();
+
+  L.marker([latitude, longitude]).addTo(map)
+  latitudeInp.value = latitude;
+  longitudeInp.value = longitude;
+});
+
+const submitCoordinates = document.getElementById("submit-coordinates");
+submitCoordinates.addEventListener('click', () => {
+  fetch(`https://api.tomorrow.io/v4/weather/history/recent?location=${latitude},${longitude}&timesteps=1d&units=metric&apikey=PY0w8ZwjhpgOyvnFd75Y5e8TDj83aJbV`)
   .then(response => response.json())
   .then(response => {
 
@@ -71,8 +122,19 @@ citiesDropdown.addEventListener('change', () => {
     ARTelm.value = ART;
     
     generateWeatherElms(dataVals);
-  
-  }).catch(err => console.error(err));
+    
+    const accessToken = "pk.eyJ1IjoibmVlbG5nIiwiYSI6ImNsaW5nYjRzMjEwbHMzZW1tcXgzZmNvdWEifQ.OoI4k3Qcegf22KvdFbOFXg";
+    fetch(`https://api.mapbox.com/v4/mapbox.mapbox-terrain-v2/tilequery/${longitude},${latitude}.json?layers=contour&limit=50&access_token=${accessToken}`)
+    .then(response => response.json())
+    .then(data => {
+      const elevationData = data.features[0].properties.ele;
+      if(elevationData) elevation.value = elevationData;
+      else elevation.value = null;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  })
 })
 
 function generateWeatherElms(dataVals){
@@ -145,7 +207,14 @@ function compute(){
 }
 
 const resetBtn = document.getElementById("reset");
-resetBtn.addEventListener('click', generateDefaultData);
+resetBtn.addEventListener('click', () => {
+  map.setView([0, 0], 1);
+  var markerIcon = document.querySelector(".leaflet-marker-icon");
+  var markerShadow = document.querySelector(".leaflet-marker-shadow");
+  if(markerShadow) markerShadow.remove();
+  if(markerIcon) markerIcon.remove();
+  generateDefaultData();
+});
 
 function generateDefaultData(){
 
@@ -155,6 +224,8 @@ function generateDefaultData(){
   ARTelm.value = 0;
   elevation.value = 0;
   effGraddient.value = 0;
+  latitudeInp.value = 0;
+  longitudeInp.value = 0;
   
   countriesDropdown.innerHTML = '<option id="default-country" value="select a country">Select a Country</option>'
   citiesDropdown.innerHTML =  '<option id="default-city" value="Select a City">Select a City</option>'
@@ -188,5 +259,5 @@ function generateDefaultData(){
     elm.value = aircraft;
     elm.innerText = aircraft;
     aircraftsDropdown.append(elm);
-  })
+  })  
 }

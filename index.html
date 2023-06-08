@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js" defer></script>
     <link rel="stylesheet" href="styles.css">
     <link class="link" rel="icon" href="https://prefute.com/images/Logo.png" type="image/icon type">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>  
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" /> -->
+    <!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script> -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkVqJ56oy5UTiMKe4xisrUGnnLi7sD2hY&libraries=elevation" defer></script> -->
+    <script src="script.js" defer></script>
     <title>Runway Length</title>
 </head>
 <body>
@@ -16,11 +22,13 @@
     <p id="error-mssg" class="alert"></p>
 
     <div class="sub-div">
-        <label id="model-L" for="model">Aircraft Model:</label>
+        <label id="model-L" for="model" class="default">Aircraft Model:</label>
+        <!-- <div> -->
         <select name="models" id="aircrafts-dropdown" class="inp">
             <option value="Select an Aircraft">Select an Aircraft</option>
         </select><br>
         <input type="text" id="model-inp" class="inp hide" placeholder="Aircraft Model">
+        <!-- </div> -->
     </div>
 
     <div class="sub-div">
@@ -40,6 +48,21 @@
         <select name="city" id="cities-dropdown" class="inp" disabled>
             <option id="default-city" value="Select a City">Select a City</option>
         </select>
+    </div>
+
+    <div class="sub-div">
+        <label for="map" id="map-L">Select a pin on the map: </label>
+    </div>
+        <div id="map"></div>
+
+    <div class="sub-div">
+        <label for="lat" id="lat-L" >Lattitude: </label>
+        <input type="number" placeholder="Lattitude" class="inp" id="lat">
+
+        <label for="lon" id="lon-L">Longitude: </label>
+        <input type="number" placeholder="longitude" class="inp" id="lon">
+
+        <button class="sqaure-btn" id="submit-coordinates"><i class="fa-solid fa-check"></i></button>
     </div>
 
     <div class="sub-div">
