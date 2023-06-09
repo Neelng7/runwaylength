@@ -53,9 +53,6 @@ button{
 select{
     width: 11.4rem;
 }
-.main-div label{
-    padding-right: calc();
-}
 .main-div{
     width: fit-content;
     margin: 0 auto;
@@ -107,13 +104,18 @@ select{
     position: relative;
     top: 1.25rem;
 }
-#weather-info-span P{
+.weather-info-span P{
     margin: 2px;
 }
-#weather-info-span{
+.weather-info-span{
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    /* text-align: left; */
+    gap: 5vw;
 }
+
 #map {
     height: 350px;
     width: 100%;

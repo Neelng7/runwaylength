@@ -14,7 +14,7 @@ const countriesDropdown = document.getElementById("countries-dropdown");
 const citiesDropdown = document.getElementById("cities-dropdown");
 const longitudeInp = document.getElementById("lon");
 const latitudeInp = document.getElementById("lat");
-const weatherInfoSpan = document.getElementById('weather-info-span');
+const weatherInfoSpan = document.querySelector('.weather-info-span');
 const defaultCountryOption = document.getElementById("default-country");
 const defaultCityOption = document.getElementById("default-city");
 const errorMssg = document.getElementById("error-mssg");
@@ -130,6 +130,7 @@ submitCoordinates.addEventListener('click', () => {
       const elevationData = data.features[0].properties.ele;
       if(elevationData) elevation.value = elevationData;
       else elevation.value = null;
+      // generateEarthData(latitude, longitude);
     })
     .catch(error => {
       console.error('Error:', error);
@@ -137,11 +138,20 @@ submitCoordinates.addEventListener('click', () => {
   })
 })
 
+const weatherInfoColumns = document.querySelectorAll(".weather-info-column");
+
 function generateWeatherElms(dataVals){
+  weatherInfoColumns.forEach(column => (column.innerHTML = ""));
+  var index_number = 0
+
   for (const [idx, value] of Object.entries(dataVals)){
+    index_number += 1;
+    var position = Math.ceil(index_number/19);
+    var requiredColumn = document.querySelector(".column" + position);
+
     var elm = document.createElement('p');
-    elm.innerText = `${idx}: ${value}`;
-    weatherInfoSpan.append(elm);
+    elm.innerHTML = `${idx}: ${value}`;
+    requiredColumn.append(elm);
   }
 }
 
@@ -149,6 +159,27 @@ moreInfoBtn.addEventListener('click', () => {
   moreInfoBtn.innerText = weatherInfoSpan.classList.contains('hide') == true ? "View less info" : "View more info"
   weatherInfoSpan.classList.toggle('hide')
 })
+
+// function generateEarthData(latitude, longitude){
+
+//   const apiKey = `eyJ0eXAiOiJKV1QiLCJvcmlnaW4iOiJFYXJ0aGRhdGEgTG9naW4iLCJzaWciOiJlZGxqd3RwdWJrZXlfb3BzIiwiYWxnIjoiUlMyNTYifQ.eyJ0eXBlIjoiVXNlciIsInVpZCI6Im5lZWxuZyIsImV4cCI6MTY5MTUyNzc1MSwiaWF0IjoxNjg2MzQzNzUxLCJpc3MiOiJFYXJ0aGRhdGEgTG9naW4ifQ.2WcCqWi-IuERKsjfZy7mqlwOGZ3lZ1In_XLeaWvxT7niTEGOU_NBBAWaK3wtkNEt3pahrvwTn2ZREU_Mjy6joERlrzOISSWZI1MsuuOSKVESfVj1NCElmGaylqF7dQwprnIY-Pmqtk4pvzWAFI4LcGoPnsKFsPWk4BBTJSRn7DqfiOQrrfxagYoq73DD7JSxiq4CiWqWDwn1YZTeI3-toVFbxIQ1lz0GK3vdexfAfEC_5mJpkMMll3xHr1--zQ0VMRm_Fsme66MLNdOOdC0IowS7mnFmOkA7QmWnGf4T9BlbDgnY_mzxC9Bb2H1Df8S7uI--VivfeUENUFLE2t29TQ`;
+
+//   fetch(`https://api.example.com/data?lat=${latitude}&lon=${longitude}&apikey=${apiKey}`)
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     // Process the API response
+//     console.log(data);
+//   })
+//   .catch(error => {
+//     console.error('Error:', error);
+//   });
+// }
+
 
 tempAvgMean.addEventListener('input', changeART);
 tempMaxMean.addEventListener('input', changeART);
@@ -190,7 +221,7 @@ submitBtn.addEventListener('click', () => {
   }
   else{
     compute();
-    if(citiesDropdown.value != "Select a City") moreInfoBtn.classList.remove('hide');
+    if(parseInt(longitudeInp.value) != NaN && parseInt(latitudeInp.value) != NaN) moreInfoBtn.classList.remove('hide');
   }
 })
 
@@ -232,6 +263,7 @@ function generateDefaultData(){
   aircraftsDropdown.innerHTML = '<option value="Select an Aircraft">Select an Aircraft</option>'
   moreInfoBtn.innerText = "View more info"
   correctedLength.innerHTML = ""
+  errorMssg.innerText = ""
   modelInp.classList.toggle('hide', true);
   moreInfoBtn.classList.toggle('hide', true);
   weatherInfoSpan.classList.toggle('hide', true);
