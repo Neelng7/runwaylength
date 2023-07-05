@@ -128,7 +128,9 @@ submitCoordinates.addEventListener('click', () => {
     .then(response => response.json())
     .then(data => {
       const elevationData = data.features[0].properties.ele;
-      if(elevationData) elevation.value = elevationData;
+      
+      if(elevationData < 0)  elevation.value = 0;
+      else if(elevationData) elevation.value = elevationData;
       else elevation.value = null;
       // generateEarthData(latitude, longitude);
     })
